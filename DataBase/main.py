@@ -14,3 +14,8 @@ print(resta)
 def multiplicacion(c,d):
     return c * d
 print(multiplicacion)
+
+def divicion(c,d):
+    return c / d
+
+print(divicion)
