@@ -11,6 +11,4 @@ def resta (c, d):
 print(resta)
 
 
-def multiplicacion(c,d):
-    return c * d
-print(multiplicacion)
+
