@@ -10,7 +10,7 @@ def resta (c, d):
 
 print(resta)
 
+# Gimena ya podes actualizar el repositorio (felicidades) I love you bitch (significa, te quiero linda, por si no sabes inglés ,jaja)
 
-def multiplicacion(c,d):
-    return c * d
-print(multiplicacion)
+
+
