@@ -156,7 +156,7 @@ resultados = cursor.fetchall()
 pdf = FPDF(orientation='L', unit='mm', format='A4')
 pdf.add_page()
 
-pdf.image('Log.jpg', x=3, y=1, w=10, h=10)
+pdf.image('2.png', x=3, y=1, w=20, h=20)
 
 pdf.set_font('Times', 'B', 20)
 pdf.cell(270, 10, 'Reporte', ln=True, align='C')
