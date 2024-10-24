@@ -152,18 +152,23 @@ cursor = conexion.cursor()
 cursor.execute(query)
 resultados = cursor.fetchall()
 
-# Crear un nuevo PDF con orientación vertical, tamaño carta
-pdf = FPDF(orientation='L', unit='mm', format='letter')
+# Crear un nuevo PDF
+pdf = FPDF(orientation='L', unit='mm', format='A4')
 pdf.add_page()
+
+pdf.image('Log.jpg', x=3, y=1, w=10, h=10)
+
+pdf.set_font('Times', 'B', 20)
+pdf.cell(270, 10, 'Reporte', ln=True, align='C')
 
 # Configuración de colores y encabezados
 pdf.set_font('Arial', 'B', 12)
 
 # Color de fondo del encabezado
 pdf.set_fill_color(200, 200, 200)  # gris claro
-pdf.cell(30, 10, 'Codigo producto', 1, 0, 'C', 1)
+pdf.cell(40, 10, 'Codigo producto', 1, 0, 'C', 1)
 pdf.cell(50, 10, 'Nombre Producto', 1, 0, 'C', 1)
-pdf.cell(40, 10, 'Cantidad de Producto', 1, 0, 'C', 1)
+pdf.cell(55, 10, 'Cantidad de Producto', 1, 0, 'C', 1)
 pdf.cell(30, 10, 'Costo Unitario', 1, 0, 'C', 1)
 pdf.cell(30, 10, 'Precio Venta', 1, 0, 'C', 1)
 pdf.cell(40, 10, 'Nombre Bodega', 1, 0, 'C', 1)
@@ -178,9 +183,9 @@ for idx, row in enumerate(resultados):
     if idx % 2 == 0:
         pdf.set_fill_color(144, 238, 144)  # verde pastel
 
-    pdf.cell(30, 10, str(row[0]), 1, 0, 'C', 1)
+    pdf.cell(40, 10, str(row[0]), 1, 0, 'C', 1)
     pdf.cell(50, 10, row[1], 1, 0, 'C', 1)
-    pdf.cell(40, 10, str(row[2]), 1, 0, 'C', 1)
+    pdf.cell(55, 10, str(row[2]), 1, 0, 'C', 1)
     pdf.cell(30, 10, str(row[3]), 1, 0, 'C', 1)
     pdf.cell(30, 10, str(row[4]), 1, 0, 'C', 1)
     pdf.cell(40, 10, row[5], 1, 0, 'C', 1)
