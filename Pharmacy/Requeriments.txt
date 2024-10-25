@@ -1,0 +1,10 @@
+
+pyodbc
+PyQt5
+Tkinter
+Fpdf
+requests
+os
+Sqlite3
+sys
+

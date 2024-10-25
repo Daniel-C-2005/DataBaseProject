@@ -1,9 +1,15 @@
+import os
+import subprocess
+from sys import platform
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QHBoxLayout, QWidget, QLabel, QPushButton, \
-    QStackedWidget, QFrame
+    QStackedWidget, QFrame, QComboBox, QMessageBox
 from PyQt5.QtGui import QIcon, QFont, QPalette, QLinearGradient, QColor, QFontDatabase
 from PyQt5.QtCore import QTimer, QTime, Qt, QSize
+from Pharmacy.Repositories.PDFS.ConsultaProductosAgotados import ProductosAgotadosPDF
+from Pharmacy.Repositories.PDFS.ConsultaProductosEnOferta import ProductosEnOfertaPDF
+from Pharmacy.Repositories.PdfCreator.CreacionHoja import PDFReportGenerator
 
-from Pharmacy.DataBase.PruebaConexion import usuario
+
 
 
 class PuntoDeVenta(QMainWindow):
@@ -12,8 +18,11 @@ class PuntoDeVenta(QMainWindow):
         self.setWindowTitle("Farmacia Luz y Esperanza")
         self.setGeometry(100, 100, 1000, 700)
 
-        # Usuario activo
-        self.usuario_activo_nombre = usuario
+        # Crear el objeto para generar PDFs
+        self.pdf_generator = PDFReportGenerator('DANIEL\\MSSQLSERVER01', 'Db_ProyectoDB1_1', 'soporte', '123')
+        self.pdf_generator.conectar_bd()
+        self.productos_en_oferta_pdf = ProductosEnOfertaPDF()
+        self.productos_agotados_pdf = ProductosAgotadosPDF()
 
         # Cargar la fuente personalizada desde el archivo TTF
         font_id = QFontDatabase.addApplicationFont("../Fonts/emmasophia.ttf")
@@ -179,13 +188,10 @@ class PuntoDeVenta(QMainWindow):
         widget_items.setLayout(layout_items)
         self.contenido_principal.addWidget(widget_items)
 
-        #Agregar cosas a la seccion de items
-        #Bottones de la seccion de items
+        # Agregar botones a la sección de items
         boton_agregar = QPushButton("Agregar Item")
         boton_agregar.setFont(QFont('Arial', 18))
         layout_items.addWidget(boton_agregar)
-
-
 
         # Sección Gestión de Inventario
         widget_gestion_inventario = QWidget()
@@ -193,8 +199,62 @@ class PuntoDeVenta(QMainWindow):
         label_gestion_inventario = QLabel("Aquí puedes gestionar el inventario", self)
         label_gestion_inventario.setFont(QFont('Arial', 18))
         layout_gestion_inventario.addWidget(label_gestion_inventario)
+
+        # Botón "Reporte Inventario"
+        boton_reporte_inventario = QPushButton("Reporte Inventario", self)
+        boton_reporte_inventario.setFont(QFont('Arial', 18))
+        boton_reporte_inventario.setStyleSheet(self.estilo_boton())
+        boton_reporte_inventario.clicked.connect(lambda: self.generar_reporte_seleccionado(0))
+        layout_gestion_inventario.addWidget(boton_reporte_inventario)
+
+        # Botón "Reporte Ofertas"
+        boton_reporte_ofertas = QPushButton("Reporte Ofertas", self)
+        boton_reporte_ofertas.setFont(QFont('Arial', 18))
+        boton_reporte_ofertas.setStyleSheet(self.estilo_boton())
+        boton_reporte_ofertas.clicked.connect(lambda: self.generar_reporte_seleccionado(1))
+        layout_gestion_inventario.addWidget(boton_reporte_ofertas)
+
+        # Botón "Reporte Agotado"
+        boton_reporte_agotado = QPushButton("Reporte Agotado", self)
+        boton_reporte_agotado.setFont(QFont('Arial', 18))
+        boton_reporte_agotado.setStyleSheet(self.estilo_boton())
+        boton_reporte_agotado.clicked.connect(lambda: self.generar_reporte_seleccionado(2))
+        layout_gestion_inventario.addWidget(boton_reporte_agotado)
+
         widget_gestion_inventario.setLayout(layout_gestion_inventario)
         self.contenido_principal.addWidget(widget_gestion_inventario)
+
+        def generar_reporte_seleccionado(self, index):
+            """
+            Genera el reporte seleccionado y lo abre.
+            """
+            try:
+                if index == 0:  # "Reporte Inventario"
+                    pdf_file_name = "reporte_inventario_bodega.pdf"
+                    QMessageBox.information(self, "Éxito", "Abriendo reporte de inventario.")
+                    self.abrir_pdf(pdf_file_name)  # Abre el PDF existente
+                elif index == 1:  # "Reporte Ofertas"
+                    pdf_file_name = "reporte_ofertas.pdf"
+                    QMessageBox.information(self, "Éxito", "Abriendo reporte de ofertas.")
+                    self.abrir_pdf(pdf_file_name)  # Abre el PDF existente
+                elif index == 2:  # "Reporte Agotado"
+                    pdf_file_name = "reporte_agotados.pdf"
+                    QMessageBox.information(self, "Éxito", "Abriendo reporte de productos agotados.")
+                    self.abrir_pdf(pdf_file_name)  # Abre el PDF existente
+            except Exception as e:
+                QMessageBox.critical(self, "Error", f"Se produjo un error: {e}")
+
+        def abrir_pdf(self, pdf_file_name):
+            """
+            Abre el archivo PDF generado, dependiendo del sistema operativo.
+            """
+            if platform.system() == 'Windows':
+                os.startfile(pdf_file_name)  # En Windows
+            elif platform.system() == 'Darwin':  # macOS
+                subprocess.Popen(['open', pdf_file_name])
+            else:  # Linux o Unix
+                subprocess.Popen(['xdg-open', pdf_file_name])
+
 
     def crear_pie_de_pagina(self, layout):
         """
@@ -207,10 +267,6 @@ class PuntoDeVenta(QMainWindow):
         self.reloj.setAlignment(Qt.AlignLeft)
         layout_pie.addWidget(self.reloj)
 
-        # Mostrar el usuario activo
-        self.usuario_activo = QLabel(f"Usuario activo: {self.usuario_activo_nombre}", self)
-        self.usuario_activo.setAlignment(Qt.AlignRight)
-        layout_pie.addWidget(self.usuario_activo)
 
         # Actualizar la hora cada segundo
         timer = QTimer(self)
