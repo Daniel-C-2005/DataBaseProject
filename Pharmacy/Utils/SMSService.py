@@ -1,14 +1,13 @@
 import requests
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton, QMessageBox
 from PyQt5.QtGui import QFont
-from PyQt5.QtCore import Qt
 
 
 class SMSService(QDialog):
     def __init__(self, auth_service):
         super().__init__()
         self.auth_service = auth_service
-        self.api_key = 'Clave de TeltBext'  # Cambia a tu clave de TextBelt si tienes una premium
+        self.api_key = '6269fda230397a5e3909ee12dd17906127a9bbb7mkwf1NmSkid5hwZzKVd8BTcgw'  # Cambia a tu clave de TextBelt si tienes una premium
 
         # Establecer el estilo general de la ventana
         self.setWindowTitle("Envío de OTP por SMS")

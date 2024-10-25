@@ -185,10 +185,11 @@ class LoginView(QDialog):
         QTimer.singleShot(700, self.abrir_ventana_principal)
 
     def abrir_ventana_principal(self):
-        from Pharmacy.GUI.main_window import MainWindow
-        self.main_window = MainWindow()
+        from Pharmacy.GUI.main_window import PuntoDeVenta  # Asegúrate de que 'MainWindow' es el nombre de la clase
+        self.main_window = PuntoDeVenta()  # Crea una instancia de 'MainWindow'
         self.main_window.show()
         self.close()
+
 
 # Ejecutar la aplicación
 if __name__ == '__main__':

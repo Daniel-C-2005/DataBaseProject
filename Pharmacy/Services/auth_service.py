@@ -28,7 +28,7 @@ class AuthService:
 
     def generar_otp(self, telefono):
         otp = str(randint(100000, 999999))  # Generar un OTP de 6 dígitos
-        expiration = datetime.now() + timedelta(minutes=10)  # OTP válido por 10 minutos
+        expiration = datetime.now() + timedelta(minutes=1)  # OTP válido por 10 minutos
 
         # Almacenar el OTP y la fecha de expiración en la base de datos
         self.cursor.execute("""

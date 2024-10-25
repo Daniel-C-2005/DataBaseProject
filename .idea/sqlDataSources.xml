@@ -5,8 +5,8 @@
       <data-sources db="6d9cb8b8-b216-4589-930a-5651db54590c" />
       <scope>
         <node negative="1">
-          <node kind="database" negative="1" />
           <node kind="schema" qname="main" />
+          <node kind="database" negative="1" />
         </node>
       </scope>
     </mapping>
@@ -15,6 +15,9 @@
     </mapping>
     <mapping uuid="cb174075-2855-41b9-bb42-7e3d16b761fb" name="identifier.sqlite Mapping">
       <data-sources db="d9dc842a-9bd4-455c-a9f4-1d0fc4ea6a9c" />
+    </mapping>
+    <mapping uuid="ad6c8807-f59a-43a7-8156-af2d6ecc5f2c" name="DDL data source Mapping">
+      <data-sources ddl="d062e415-8da6-481f-924d-482462f9eed3" />
     </mapping>
   </component>
   <component name="SqlDataSourceStorage">
