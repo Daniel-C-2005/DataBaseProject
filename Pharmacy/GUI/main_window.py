@@ -9,7 +9,7 @@ from Pharmacy.DataBase.PruebaConexion import usuario
 class PuntoDeVenta(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Farmacia Portal del Angél")
+        self.setWindowTitle("Farmacia Luz y Esperanza")
         self.setGeometry(100, 100, 1000, 700)
 
         # Usuario activo
@@ -41,7 +41,7 @@ class PuntoDeVenta(QMainWindow):
         layout_principal.addSpacing(15)
 
         # Texto principal
-        texto_principal = QLabel("Farmacia Portal del Angél", self)
+        texto_principal = QLabel("Farmacia Luz y Esperanza", self)
         texto_principal.setAlignment(Qt.AlignCenter)
         texto_principal.setFont(QFont('Montserrat', 24, QFont.Bold))
         texto_principal.setStyleSheet("color: white;")

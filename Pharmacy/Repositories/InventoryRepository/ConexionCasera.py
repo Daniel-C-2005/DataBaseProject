@@ -1,6 +1,6 @@
 import pyodbc
 
-server='localhost'
+server='DANIEL\\MSSQLSERVER01'
 bd='Db_ProyectoDB1_1'
 usuario='soporte'
 contrasenia='123'

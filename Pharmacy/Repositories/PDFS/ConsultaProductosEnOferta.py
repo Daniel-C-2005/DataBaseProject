@@ -14,7 +14,7 @@ OfertaPDF.close()
 pdf = FPDF(orientation='P', unit='mm', format='Letter')
 pdf.set_auto_page_break(auto=True, margin=15)
 pdf.add_page()
-
+pdf.image('2.png', x=3, y=1, w=20, h=20)
 
 # Agregar título
 pdf.set_font('Arial', 'B', 14)

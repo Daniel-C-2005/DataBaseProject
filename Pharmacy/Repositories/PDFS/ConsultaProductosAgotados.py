@@ -17,7 +17,7 @@ AgotadosPDF.close()
 pdf = FPDF(orientation='P', unit='mm', format='Letter')
 pdf.set_auto_page_break(auto=True, margin=15)
 pdf.add_page()
-
+pdf.image('2.png', x=3, y=1, w=20, h=20)
 
 # Agregar título
 pdf.set_font('Arial', 'B', 14)
@@ -41,7 +41,7 @@ for row in results:
     pdf.cell(40, 8, f"{row[2]:.2f}", 1, 0, 'C', 1)  # Muestra el costo unitario con dos decimales
 
 # Guardar el PDF
-pdf_output_path = 'Reporte Farmacia.pdf'
+pdf_output_path = 'Reporte Farmacia Agotados.pdf'
 pdf.output(pdf_output_path)
 
 print(f'PDF generado correctamente: {pdf_output_path}')
